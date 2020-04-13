@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Navigation from './components/Navigation/Navigation';
+import SignIn from './components/SignIn/SignIn';
+//import { Navbar, Nav, NavDropdown, Form, FormControl, Button} from 'react-bootstrap';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+
+    }
+  }
+
+  componentDidMount() {
+
+  }
+
+  render() {
+
+    return (
+      <div className="App" >
+        <Navigation/>
+          
+        <SignIn/>
+      </div>
+    )
+  }
 }
 
 export default App;
