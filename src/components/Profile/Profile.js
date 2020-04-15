@@ -1,21 +1,28 @@
 import React from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Jumbotron } from 'react-bootstrap';
 
-const Profile = () => {
+class Profile extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+
+    }
+  }
+
+  render() {
+
     return (
-        <div className="App">
-        <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">Stocks-Daily</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Profile</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+      <div>
+        <Jumbotron>
+        <h1>Hello, world!</h1>
+          <p>
+            This is a simple hero unit, a simple jumbotron-style component for calling
+            extra attention to featured content or information.
+          </p>
+        </Jumbotron>    
       </div>
     )
+  }
 }
 
 export default Profile;
