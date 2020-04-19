@@ -37,11 +37,29 @@ class  Registration extends React.Component {
     }
 
     onRegister = () => {
-        this.props.onRouteChange('home');
+        fetch('http://localhost:3001/register', {
+            method: 'post',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                email: this.state.email,
+                password: this.state.password,
+                companies: this.state.selected,
+                increase: this.state.increase,
+                decrease: this.state.decrease
+            })
+        })
+        .then(res => res.json())
+        .catch(console.log)
+        .then(companyList => {
+            if (companyList.length > 0) {
+                this.props.loadUser(companyList);
+                this.props.onRouteChange('home');
+            }
+        })
+        
     }
 
     render() {
-        const { onRouteChange } = this.props;
         const { selected } = this.state;
 
         const options = companies.map((company, index) => {
@@ -57,7 +75,7 @@ class  Registration extends React.Component {
         })
 
         return (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center',}}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '5rem'}}>
                 <Card style={{ width : '35rem' }}>
                     <Card.Title> Register </Card.Title>
                     <Form>
@@ -126,7 +144,7 @@ class  Registration extends React.Component {
 
                         <Form.Group as={Row}>
                             <Col sm={{ span: 8, offset: 2 }}>
-                            <Button type="submit" onClick={() => onRouteChange('register')}>Register</Button>
+                            <Button onClick={this.onRegister}>Register</Button>
                             </Col>
                         </Form.Group>
                     </Form>

@@ -2,47 +2,56 @@ import React, { Component } from 'react';
 import './App.css';
 import Navigation from './components/Navigation/Navigation';
 import SignIn from './components/SignIn/SignIn';
-import Profile from './components/Profile/Profile'
+import Home from './components/Home/Home'
 import Registration from './components/Registration/Registration';
 
+const initialState = {
+  signedIn: 'false',
+  route: 'signin',
+  companies: [],
+}
 
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      signedIn: 'false',
-      route: 'register'
-    }
+    this.state = initialState;
   }
 
-  componentDidMount() {
-
+  loadUser = (companyList) => {
+    this.setState({
+      companies: companyList,
+    })
   }
 
   onRouteChange = (route) => {
     if (route === 'signout')
-      return this.setState({signedIn: false});
-    else
-      this.setState({signedIn: true})
-    this.setState({route: route})
+    {
+      return this.setState(initialState);
+    }
+    else if (route === 'home')
+    {
+      this.setState({signedIn: true});
+    }
+    this.setState({route: route});
   }
 
   render() {
 
-    const { route } = this.state;
+    const { route, companies } = this.state;
 
     return (
       <div className="App" >
-        <Navigation/>
+        <Navigation onRouteChange={this.onRouteChange}/>
         { (() => {
-          if (route === 'signin') {
-            return(<SignIn onRouteChange={this.onRouteChange}/>)
-          }
-          else if (route === 'register') {
-            return(<Registration onRouteChange={this.onRouteChange}/>)
+          
+          if (route === 'register') {
+            return(<Registration onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>)
           }
           else if (route === 'home') {
-            return(<Profile onRouteChange={this.onRouteChange}/>)
+            return(<Home  companies={companies}/>)
+          }
+          else {
+            return(<SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>)
           }
         })()}
       </div>

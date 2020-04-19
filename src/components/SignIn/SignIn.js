@@ -5,7 +5,8 @@ class SignIn extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            email: '',
+            password: ''
         }
     }
 
@@ -18,14 +19,29 @@ class SignIn extends React.Component {
     }
 
     onSignIn = () => {
-        this.props.onRouteChange('home');
+        fetch('http://localhost:3001/signin', {
+            method: 'post',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                email: this.state.email,
+                password: this.state.password
+            })
+        })
+        .then(res => res.json())
+        .catch(console.log)
+        .then(companyList => {
+            if (companyList.length > 0) {
+                this.props.loadUser(companyList);
+                this.props.onRouteChange('home');
+            }
+        })
     }
 
     render() {
         const { onRouteChange } = this.props;
 
         return (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '5rem' }}>
                 <Card style={{ width : '40rem' }} >
                     <Card.Title> Sign In </Card.Title>
                     <Form>
@@ -33,7 +49,7 @@ class SignIn extends React.Component {
                             <Form.Label column sm={2}>
                             Email
                             </Form.Label>
-                            <Col sm={10}>
+                            <Col sm={8}>
                             <Form.Control type="email" placeholder="Email" onChange={this.onEmailChange}/>
                             </Col>
                         </Form.Group>
@@ -42,23 +58,20 @@ class SignIn extends React.Component {
                             <Form.Label column sm={2}>
                             Password
                             </Form.Label>
-                            <Col sm={10}>
+                            <Col sm={8}>
                             <Form.Control type="password" placeholder="Password" onChange={this.onPasswordChange}/>
                             </Col>
                         </Form.Group>
-                        
-                        <Form.Group as={Row} controlId="formCheck">
-                            <Col sm={{ span: 8, offset: 2 }}>
-                            <Form.Check label="Remember me" />
-                            </Col>
-                        </Form.Group>
     
-                        <Form.Group as={Row}>
+                        <Form.Group as={Row} >
                             <Col sm={{ span: 8, offset: 2 }}>
-                            <Button type="register" onClick={() => onRouteChange('register')}>Register</Button>
-                            <Button type="submit" onClick={() => this.onSignIn}>Sign in</Button>
+                                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-evenly'}}>
+                                    <Button onClick={() => onRouteChange('register')}>Register</Button>
+                                    <Button onClick={this.onSignIn}>Sign in</Button>
+                                </div>
                             </Col>
                         </Form.Group>
+                        
                     </Form>
                 </Card>
             </div>

@@ -1,17 +1,16 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 
-const Navigation = () => {
+const Navigation = ({ onRouteChange }) => {
     return (
         <div className="" style={{ alignSelf: 'center' }}>
-            <Navbar bg="light">
+            <Navbar bg="dark" variant="dark">
                 <Navbar.Brand href="home">Stocks-Daily</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse>
                     <Nav className="justify-content-end" style={{ width: "100%" }}>
-                        <Nav.Link href="home">Home</Nav.Link>
-                        <Nav.Link href="profile">Profile</Nav.Link>
-                </Nav>
+                        <Nav.Link onClick={() => onRouteChange("signin")}>Sign out</Nav.Link>
+                    </Nav>
                 </Navbar.Collapse>
             </Navbar>
         </div>
