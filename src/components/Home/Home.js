@@ -7,7 +7,7 @@ const Home = ({companies}) => {
 
   let list = companies.map((company, index) => {
     return(
-      <div style={{maxWidth: '20rem'}} key={index}>
+      <div style={{maxWidth: '18rem'}} key={index}>
         <Card border="dark" >
           <Card.Header as='h6'>{`Stock: ${company.name}`}</Card.Header>
           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-evenly'}}>
@@ -24,7 +24,7 @@ const Home = ({companies}) => {
   return (
     <div style={{paddingTop: '3rem'}}>
       <h2>Today's prices for your selected stocks!</h2>
-        <CardDeck style={{flexShrink: 2, padding: '3rem', paddingBottom: '0rem', flexWrap: 'wrap'}}>
+        <CardDeck style={{padding: '3rem', paddingBottom: '0rem', flexWrap: 'wrap', width: "100%"}}>
           {list}
         </CardDeck>
     </div>

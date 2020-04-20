@@ -18,6 +18,7 @@ class App extends Component {
   }
 
   loadUser = (companyList) => {
+    console.log(companyList)
     this.setState({
       companies: companyList,
     })
