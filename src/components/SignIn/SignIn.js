@@ -6,7 +6,8 @@ class SignIn extends React.Component {
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            invalid: false,
         }
     }
 
@@ -34,11 +35,14 @@ class SignIn extends React.Component {
                 this.props.loadUser(companyList);
                 this.props.onRouteChange('home');
             }
+            else {
+                this.setState({invalid: true});
+            }
         })
     }
 
     render() {
-        const { onRouteChange } = this.props;
+        const { onRouteChange, invalid } = this.props;
 
         return (
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '5rem' }}>
@@ -65,6 +69,11 @@ class SignIn extends React.Component {
     
                         <Form.Group as={Row} >
                             <Col sm={{ span: 8, offset: 2 }}>
+                                { invalid && 
+                                    <p style={{color: 'red'}}>
+                                        Invalid E-mail and Password
+                                    </p>
+                                }
                                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-evenly'}}>
                                     <Button onClick={() => onRouteChange('register')}>Register</Button>
                                     <Button onClick={this.onSignIn}>Sign in</Button>

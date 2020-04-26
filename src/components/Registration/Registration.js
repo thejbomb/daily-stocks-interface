@@ -10,7 +10,8 @@ class  Registration extends React.Component {
             password: '',
             email: '',
             decrease: false,
-            increase: false
+            increase: false,
+            invalid: false,
         }
     }
 
@@ -60,7 +61,7 @@ class  Registration extends React.Component {
     }
 
     render() {
-        const { selected } = this.state;
+        const { selected, invalid } = this.state;
 
         const options = companies.map((company, index) => {
             return(
@@ -144,6 +145,11 @@ class  Registration extends React.Component {
 
                         <Form.Group as={Row}>
                             <Col sm={{ span: 8, offset: 2 }}>
+                            { invalid && 
+                                <p style={{color: 'red'}}>
+                                    Invalid E-mail and Password
+                                </p>
+                            }
                             <Button onClick={this.onRegister}>Register</Button>
                             </Col>
                         </Form.Group>

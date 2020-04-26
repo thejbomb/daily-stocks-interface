@@ -4,6 +4,7 @@ import Navigation from './components/Navigation/Navigation';
 import SignIn from './components/SignIn/SignIn';
 import Home from './components/Home/Home'
 import Registration from './components/Registration/Registration';
+import Stocks from './components/Stocks/Stocks'
 
 const initialState = {
   signedIn: 'false',
@@ -18,10 +19,29 @@ class App extends Component {
   }
 
   loadUser = (companyList) => {
-    console.log(companyList)
     this.setState({
       companies: companyList,
     })
+  }
+
+  addStock = (company) => {
+    fetch('http://localhost:3001/stock', {
+            method: 'post',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                company: company,
+            })
+        })
+        .then(res => res.json())
+        .catch(console.log)
+        .then(stock => {
+          console.log(stock)
+            if (stock.name) {
+                this.setState({
+                  companies: [...this.state.companies, stock],
+                })
+            }
+        })
   }
 
   onRouteChange = (route) => {
@@ -38,11 +58,11 @@ class App extends Component {
 
   render() {
 
-    const { route, companies } = this.state;
+    const { route, companies, signedIn } = this.state;
 
     return (
       <div className="App" >
-        <Navigation onRouteChange={this.onRouteChange}/>
+        <Navigation signedIn={signedIn} onRouteChange={this.onRouteChange}/>
         { (() => {
           
           if (route === 'register') {
@@ -50,6 +70,9 @@ class App extends Component {
           }
           else if (route === 'home') {
             return(<Home  companies={companies}/>)
+          }
+          else if (route === 'stocks') {
+            return(<Stocks addStock={this.addStock} companiesList={companies}/>)
           }
           else {
             return(<SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>)

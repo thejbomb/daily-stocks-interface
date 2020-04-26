@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Button, CardDeck } from 'react-bootstrap';
+import { Card, CardDeck } from 'react-bootstrap';
 
 const Home = ({companies}) => {
   let date = new Date();
@@ -12,12 +12,10 @@ const Home = ({companies}) => {
           <Card.Header as='h6'>{`Stock: ${company.name}`}</Card.Header>
           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-evenly'}}>
             <p>{`Price: $${company.price}`}</p>
-            <Button size="sm">Set to today</Button>
           </div>
           <Card.Footer>  {`Last updated: ${date.toDateString()}`} </Card.Footer>
         </Card>
       </div>
-      
     )
   })
 
