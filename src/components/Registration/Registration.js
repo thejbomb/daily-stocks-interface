@@ -38,26 +38,32 @@ class  Registration extends React.Component {
     }
 
     onRegister = () => {
-        fetch('http://localhost:3001/register', {
-            method: 'post',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                email: this.state.email,
-                password: this.state.password,
-                companies: this.state.selected,
-                increase: this.state.increase,
-                decrease: this.state.decrease
+        const { email, password, selected } = this.state;
+        if (email.includes('@') && email.includes('.') && password.length > 0 && selected.length > 0) 
+        {
+            fetch('http://localhost:3001/register', {
+                method: 'post',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    email: this.state.email,
+                    password: this.state.password,
+                    companies: this.state.selected,
+                    increase: this.state.increase,
+                    decrease: this.state.decrease
+                })
             })
-        })
-        .then(res => res.json())
-        .catch(console.log)
-        .then(companyList => {
-            if (companyList.length > 0) {
-                this.props.loadUser(companyList);
-                this.props.onRouteChange('home');
-            }
-        })
-        
+            .then(res => res.json())
+            .catch(console.log)
+            .then(companyList => {
+                if (companyList.success === true) {
+                    this.props.loadUser(companyList, this.state.email);
+                    this.props.onRouteChange('home');
+                }
+            })
+        }
+        else {
+            this.setState({invalid: true});
+        }
     }
 
     render() {
@@ -145,11 +151,11 @@ class  Registration extends React.Component {
 
                         <Form.Group as={Row}>
                             <Col sm={{ span: 8, offset: 2 }}>
-                            { invalid && 
-                                <p style={{color: 'red'}}>
-                                    Invalid E-mail and Password
-                                </p>
-                            }
+                            { invalid === true ? 
+                                <Form.Label column style={{color: 'red'}}>
+                                Please fill in everything with valid inputs
+                                </Form.Label> 
+                                : <div></div>}
                             <Button onClick={this.onRegister}>Register</Button>
                             </Col>
                         </Form.Group>

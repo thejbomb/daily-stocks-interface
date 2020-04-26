@@ -9,6 +9,7 @@ import Stocks from './components/Stocks/Stocks'
 const initialState = {
   signedIn: 'false',
   route: 'signin',
+  email: "",
   companies: [],
 }
 
@@ -18,18 +19,20 @@ class App extends Component {
     this.state = initialState;
   }
 
-  loadUser = (companyList) => {
+  loadUser = (companyList, email) => {
     this.setState({
       companies: companyList,
+      email: email
     })
   }
 
   addStock = (company) => {
-    fetch('http://localhost:3001/stock', {
+    fetch('http://localhost:3001/update', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 company: company,
+                email: this.state.email,
             })
         })
         .then(res => res.json())

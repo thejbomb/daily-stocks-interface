@@ -31,8 +31,8 @@ class SignIn extends React.Component {
         .then(res => res.json())
         .catch(console.log)
         .then(companyList => {
-            if (companyList.length > 0) {
-                this.props.loadUser(companyList);
+            if (companyList.success === true) {
+                this.props.loadUser(companyList, this.state.email);
                 this.props.onRouteChange('home');
             }
             else {
@@ -42,7 +42,8 @@ class SignIn extends React.Component {
     }
 
     render() {
-        const { onRouteChange, invalid } = this.props;
+        const { onRouteChange } = this.props;
+        const { invalid } = this.state;
 
         return (
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '5rem' }}>
@@ -69,11 +70,11 @@ class SignIn extends React.Component {
     
                         <Form.Group as={Row} >
                             <Col sm={{ span: 8, offset: 2 }}>
-                                { invalid && 
-                                    <p style={{color: 'red'}}>
-                                        Invalid E-mail and Password
-                                    </p>
-                                }
+                                { invalid === true ? 
+                                    <Form.Label column style={{color: 'red'}}>
+                                    Invalid E-mail and/or Password
+                                    </Form.Label> 
+                                    : <div></div>}
                                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-evenly'}}>
                                     <Button onClick={() => onRouteChange('register')}>Register</Button>
                                     <Button onClick={this.onSignIn}>Sign in</Button>
