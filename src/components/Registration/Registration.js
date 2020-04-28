@@ -55,7 +55,7 @@ class  Registration extends React.Component {
             .then(res => res.json())
             .catch(console.log)
             .then(companyList => {
-                if (companyList.success === true) {
+                if (companyList.length > 0) {
                     this.props.loadUser(companyList, this.state.email);
                     this.props.onRouteChange('home');
                 }

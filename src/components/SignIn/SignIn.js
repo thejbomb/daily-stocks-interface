@@ -30,13 +30,13 @@ class SignIn extends React.Component {
         })
         .then(res => res.json())
         .catch(console.log)
-        .then(companyList => {
-            if (companyList.success === true) {
-                this.props.loadUser(companyList, this.state.email);
-                this.props.onRouteChange('home');
+        .then(data => {
+            if (data === 'wrong credentials') {
+                this.setState({invalid: true});
             }
             else {
-                this.setState({invalid: true});
+                this.props.loadUser(data, this.state.email);
+                this.props.onRouteChange('home');
             }
         })
     }
