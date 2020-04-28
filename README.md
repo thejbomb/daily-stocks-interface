@@ -1,3 +1,7 @@
+This project (front-end) notifies users when there is a change in the stocks that they're interested in.
+
+dailystocks.info
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
