@@ -1,7 +1,7 @@
 export const companies = [
-    "msft",
-    "amzn",
-    "fb",
-    "aapl",
-    "tsla"
+  'msft',
+  'amzn',
+  'fb',
+  'aapl',
+  'tsla'
 ];

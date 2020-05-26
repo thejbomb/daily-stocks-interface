@@ -27,32 +27,30 @@ class App extends Component {
   }
 
   addStock = (company) => {
-    fetch('http://localhost:3001/update', {
+    fetch('http://ec2-18-188-13-49.us-east-2.compute.amazonaws.com/api/update', {
             method: 'post',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 company: company,
                 email: this.state.email,
             })
         })
-        .then(res => res.json())
+        .then((res) => res.json())
         .catch(console.log)
-        .then(stock => {
-          console.log(stock)
+        .then((stock) => {
             if (stock.name) {
                 this.setState({
                   companies: [...this.state.companies, stock],
                 })
             }
-        })
+        });
   }
 
   onRouteChange = (route) => {
     if (route === 'signout')
     {
       return this.setState(initialState);
-    }
-    else if (route === 'home')
+    } else if (route === 'home')
     {
       this.setState({signedIn: true});
     }
@@ -60,27 +58,27 @@ class App extends Component {
   }
 
   render() {
-
-    const { route, companies, signedIn } = this.state;
+    const {route, companies, signedIn} = this.state;
 
     return (
       <div className="App" >
         <Navigation signedIn={signedIn} onRouteChange={this.onRouteChange}/>
         { (() => {
-          
-          if (route === 'register') {
-            return(<Registration onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>)
+          switch (route) {
+            case 'register': {
+              return(<Registration onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>);
+            }
+            case 'home': {
+              return(<Home  companies={companies}/>);
+            }
+            case 'stocks': {
+              return(<Stocks addStock={this.addStock} companiesList={companies}/>)
+            }
+            default: {
+              return(<SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>);
+            }
           }
-          else if (route === 'home') {
-            return(<Home  companies={companies}/>)
-          }
-          else if (route === 'stocks') {
-            return(<Stocks addStock={this.addStock} companiesList={companies}/>)
-          }
-          else {
-            return(<SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>)
-          }
-        })()}
+        })() }
       </div>
     )
   }
