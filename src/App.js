@@ -19,6 +19,12 @@ class App extends Component {
     this.state = initialState;
   }
 
+  /**
+   * Loads user's settings
+   * 
+   * @param {string} email The user's email.
+   * @param {Array} companyList The list of companies the user is interested in.
+   */
   loadUser = (companyList, email) => {
     this.setState({
       companies: companyList,
@@ -26,8 +32,13 @@ class App extends Component {
     })
   }
 
+  /**
+   * Updates the list of companies by adding the additional company stock to state and to the backend.
+   * 
+   * @param {string} company The additional company stock
+   */
   addStock = (company) => {
-    fetch('http://ec2-18-188-13-49.us-east-2.compute.amazonaws.com/api/update', {
+    fetch('/api/update', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -46,6 +57,11 @@ class App extends Component {
         });
   }
 
+  /**
+   * Changes the state according to what "route" the user is in
+   * 
+   * @param {string} route The route or page the user is currently on
+   */
   onRouteChange = (route) => {
     if (route === 'signout')
     {

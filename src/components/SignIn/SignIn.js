@@ -17,19 +17,30 @@ class SignIn extends React.Component {
     }
   }
 
+  /**
+   * Saves the input change of the email to state
+   * @param event The input change event
+   */
   onEmailChange = (event) => {
     this.setState({email: event.target.value});
   }
 
+  /**
+   * Saves the input change of the password to state
+   * @param event The input change event
+   */
   onPasswordChange = (event) => {
     this.setState({password: event.target.value});
   }
 
+  /**
+   * Sends a signin post request to the server
+   */
   onSignIn = () => {
     const {email, password} = this.state;
     if (email.includes('@') && email.includes('.') && password.length > 0 ) 
     {
-      fetch('http://ec2-18-188-13-49.us-east-2.compute.amazonaws.com/api/signin', {
+      fetch('/api/signin', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({

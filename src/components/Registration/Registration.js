@@ -24,39 +24,64 @@ class Registration extends React.Component {
     }
   }
 
+  /**
+   * Saves the input change of the name to state
+   * @param event The input change event
+   */
   onNameChange = (event) => {
     this.setState({name: event.target.value});
   }
 
+  /**
+   * Saves the input change of the email to state
+   * @param event The input change event
+   */
   onEmailChange = (event) => {
     this.setState({email: event.target.value});
   }
 
+  /**
+   * Saves the input change of the password to state
+   * @param event The input change event
+   */
   onPasswordChange = (event) => {
     this.setState({password: event.target.value});
   }
 
+  /**
+   * Saves the input change of the company list to state
+   * @param event The input change event
+   */
   onOptionChange = (event) => {
     let next = [...this.state.selected, event.target.value];
     this.setState({selected: next});
     companies.splice(companies.indexOf(event.target.value), 1);
   }
 
+  /**
+   * Saves the increase boolean (to dictate if user is interested in a price increase) to state
+   */
   onIncChange = () => {
     this.setState({increase: !this.state.increase});
   }
 
+  /**
+   * Saves the decrease boolean (to dictate if user is interested in a price decrease) to state
+   */
   onDecChange = () => {
     this.setState({decrease: !this.state.decrease});
   }
 
+  /**
+   * Sends a resgister post request to the server to create a new document in the database
+   */
   onRegister = () => {
     const {name, email, password, selected, increase, decrease} = this.state;
     if (email.includes('@') && email.includes('.') && password.length > 0 && selected.length > 0) 
     {
       let newUser = new User(name, email, password, selected, increase, decrease);
 
-      fetch('http://ec2-18-188-13-49.us-east-2.compute.amazonaws.com/api/register', {
+      fetch('/api/register', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(newUser)

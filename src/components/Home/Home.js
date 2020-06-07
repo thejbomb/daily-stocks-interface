@@ -8,6 +8,7 @@ const Home = ({companies}) => {
   let date = new Date();
   date.setHours(9,0,0);
 
+  //formats the company stocks the user is interested in into card components
   let list = companies.map((company, index) => {
     return(
       <div style={{maxWidth: '18rem'}} key={index}>
