@@ -40,7 +40,7 @@ class SignIn extends React.Component {
     const {email, password} = this.state;
     if (email.includes('@') && email.includes('.') && password.length > 0 ) 
     {
-      fetch('/api/signin', {
+      fetch('http://ec2-18-188-13-49.us-east-2.compute.amazonaws.com/api/signin', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({

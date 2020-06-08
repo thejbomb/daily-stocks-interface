@@ -38,7 +38,7 @@ class App extends Component {
    * @param {string} company The additional company stock
    */
   addStock = (company) => {
-    fetch('/api/update', {
+    fetch('http://ec2-18-188-13-49.us-east-2.compute.amazonaws.com/api/update', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

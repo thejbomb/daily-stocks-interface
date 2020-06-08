@@ -81,7 +81,7 @@ class Registration extends React.Component {
     {
       let newUser = new User(name, email, password, selected, increase, decrease);
 
-      fetch('/api/register', {
+      fetch('http://ec2-18-188-13-49.us-east-2.compute.amazonaws.com/api/register', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(newUser)
